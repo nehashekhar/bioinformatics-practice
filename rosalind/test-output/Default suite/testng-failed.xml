@@ -3,11 +3,11 @@
 <suite name="Failed suite [Default suite]">
   <test name="Default test(failed)">
     <classes>
-      <class name="bioinformatics_practice.rosalind.RabbitsAndRecurrenceRelationsTest">
+      <class name="bioinformatics_practice.rosalind.WrightFisherModelTest">
         <methods>
-          <include name="fibonacciTest"/>
+          <include name="factorialTest"/>
         </methods>
-      </class> <!-- bioinformatics_practice.rosalind.RabbitsAndRecurrenceRelationsTest -->
+      </class> <!-- bioinformatics_practice.rosalind.WrightFisherModelTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
