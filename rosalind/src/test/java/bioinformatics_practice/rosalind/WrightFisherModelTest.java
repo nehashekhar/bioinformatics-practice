@@ -1,16 +1,29 @@
 package bioinformatics_practice.rosalind;
 
+import java.text.DecimalFormat;
+
 import org.testng.annotations.Test;
 
 import junit.framework.Assert;
 
 public class WrightFisherModelTest {
+	DecimalFormat df;
 
 	@Test
 	public void WFMoverGTest() throws Exception {
-//		double x = WrightFisherModel.WFMoverGenerations(1, 4, 1 - WrightFisherModel.calculateProbability(4, 6), 2);
-//		Assert.assertEquals(0.772, x);
-		Assert.fail("TBD");
+		df = new DecimalFormat("#.###");
+		
+		double x = WrightFisherModel.atLeastKCopiesOverGenerations(1, 4, 1 - WrightFisherModel.calculateProbability(4, 6), 2);
+		Assert.assertEquals(df.format(0.772), df.format(x));
+//		Assert.fail("TBD");
+	}
+	
+	@Test(description="This value was pulled from a paper: http://evol.bio.lmu.de/_teaching/evogen/Evo9-Summary.pdf")
+	public void wfmPositiveTest() throws Exception {
+		df = new DecimalFormat("#.##");
+		
+		double x = WrightFisherModel.wrightFisherModel(2, 5, 0.2);
+		Assert.assertEquals(df.format(0.30), df.format(x));
 	}
 	
 	@Test
