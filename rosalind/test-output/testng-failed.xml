@@ -5,7 +5,7 @@
     <classes>
       <class name="bioinformatics_practice.rosalind.WrightFisherModelTest">
         <methods>
-          <include name="wfmOverGenerations"/>
+          <include name="sanityCheck"/>
         </methods>
       </class> <!-- bioinformatics_practice.rosalind.WrightFisherModelTest -->
     </classes>
