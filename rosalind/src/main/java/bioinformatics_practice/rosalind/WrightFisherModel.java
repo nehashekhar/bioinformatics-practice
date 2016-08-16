@@ -25,40 +25,17 @@ public class WrightFisherModel {
 
 			// double p = calculateProbability(N, m); //dominant allele
 			double p = calculateProbability(N, (2 * N - m)); // recessive allele
-			double y = atLeastKCopiesOverGenerations(k, N, p, g);
+			double prob = 0;
+			for (int atLeastK = k; atLeastK <= 2 * N; atLeastK++) {
+				prob = prob + probabilityOverGenerationsAndCopyNumbers(atLeastK, N, p, g);
+			}
 			System.out.println("The probability of finding at least " + k + " copy(ies)"
 					+ " of this gene \nin a population of " + N + " individuals \nover " + g
-					+ " generations \nwith an initial probability of " + p + " is: \n" + y);
+					+ " generations \nwith an initial probability of " + p + " is: \n" + prob);
 
-			System.out.println("Another approach: " + probabilityOverGenerationsAndCopyNumbers(k, N, p, g));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	static double atLeastKCopiesOverGenerations(int k, int N, double p, int g) throws Exception {
-		double x = 0;
-
-		for (int i = k; i <= (2 * N); i++) {
-			x = x + WFMoverGenerations(i, N, p, g);
-			System.out.println(
-					"Probability of observing " + k + " to " + i + " copies: " + x + " over " + g + " generations.");
-		}
-		return x;
-	}
-
-	/*
-	 * This function calculates the WFM probability over g generations
-	 */
-	static double WFMoverGenerations(int k, int N, double p, int g) throws Exception {
-		double probabilityOverGenerations = p;
-
-		for (int i = 1; i <= g; i++) {
-			probabilityOverGenerations = wrightFisherModel(k, N, probabilityOverGenerations);
-			System.out.println("Generation: " + i + " | " + probabilityOverGenerations);
-		}
-
-		return probabilityOverGenerations;
 	}
 
 	/*
@@ -90,20 +67,18 @@ public class WrightFisherModel {
 		}
 	}
 
+	
 	static double calculateProbability(int N, int m) {
 		double p = ((double) m) / ((double) (N * 2));
 		return p;
 	}
 
-	/*********
-	 * 
-	 */
-
-	private static double probabilityOverGenerationsAndCopyNumbers(int k, int N, double p, int g) throws Exception {
+	static double probabilityOverGenerationsAndCopyNumbers(int k, int N, double p, int g) throws Exception {
 		System.out.println("------");
-		// For each generation, we have allelelic frequency given alleleic
+		int totalAlleles = 2 * N;
+		// For each generation, we have p of allellic frequency given p of allelic
 		// frequency of previous generation
-		// Loop over alleleic frequencies by generation
+		// Loop over allelic frequencies by generation
 		// E.g. g0=p0, g1=p|p0, p2|p0, p3|p0, etc. until pN
 		// g2=p|p0 from g1, p|p1 from g1, etc.
 		// g3=p|p0 from g2
@@ -112,44 +87,42 @@ public class WrightFisherModel {
 		// getting k in a generation (changes generationally)
 		HashMap<Integer, Double> allelicFreqVsProbability = new HashMap<Integer, Double>();
 
-		// First generation
+		// First generation; seed values
 		double g1sum = 0;
-		for (int allelicFreq = 0; allelicFreq <= 2 * N; allelicFreq++) {
-			double pN = wrightFisherModel(allelicFreq, N, p);
+		for (int mAlleles = 0; mAlleles <= totalAlleles; mAlleles++) {
+			double pN = wrightFisherModel(mAlleles, N, p);
 			System.out.println(
-					"G1 probability of getting " + allelicFreq + " copies given p(previous gen) = " + p + "| " + pN);
-			allelicFreqVsProbability.put(allelicFreq, pN);
+					"G1 probability of getting " + mAlleles + " copies given p(previous gen) = " + p + "| " + pN);
+			allelicFreqVsProbability.put(mAlleles, pN);
 			g1sum = g1sum + pN;
 		}
 		System.out.println("G1SUM: " + g1sum);
 
-		// Second generation
-		for (int k2 = 0; k2 <= 2 * N; k2++) {
-			double pN2 = 0;
-			for (int allelicFreq = 0; allelicFreq <= 2 * N; allelicFreq++) {
-				double pPreviousGen = allelicFreqVsProbability.get(allelicFreq);
-				double pN = wrightFisherModel(k2, N, calculateProbability(N, allelicFreq));
-				System.out.println("G2 probability of getting " + k2 + " copies given previous gen had " + allelicFreq
-						+ " copies and p " + pPreviousGen + " | " + pN);
+		// Second generation and onwards
+		for (int generation = 2; generation <= g; generation++) {
+			for (int k2 = 0; k2 <= totalAlleles; k2++) {
+				double pN2 = 0;
+				for (int mAlleles = 0; mAlleles <= totalAlleles; mAlleles++) {
+					double pPreviousGen = allelicFreqVsProbability.get(mAlleles);
+					double pN = wrightFisherModel(k2, N, calculateProbability(N, mAlleles));
 
-				//Probability of getting X copies (variable) given Y in previous gen (fixed) sums to 1
-				//NOT probability of getting X copies (fixed) given Y in previous gen (variable)
-				//Weighted sum? Probability of A given B times probability of B
-				pN2 = pN2 + pN*pPreviousGen;
+					// Weighted sum (total law of probability): Probability of A
+					// given B times probability of B
+					pN2 = pN2 + (pN * pPreviousGen);
+				}
+				allelicFreqVsProbability.put(k2, pN2);
+				System.out.println("G2 Cumulative probability of getting " + k2 + " copies: " + pN2);
 			}
-			allelicFreqVsProbability.put(k2, pN2);
-			System.out.println("Cumulative probability of getting " + k2 + " copies: " + pN2);
+			
+			// Check to ensure that probabilities sum to 1 in each generation
+			double GNSUM = 0;
+			for (int allelicFreq = 0; allelicFreq <= totalAlleles; allelicFreq++) {
+				GNSUM = GNSUM + allelicFreqVsProbability.get(allelicFreq);
+			}
+			System.out.println("GNSUM: " + GNSUM);
 		}
-		
-		double G2SUM = 0;
-		for (int allelicFreq = 1; allelicFreq <= 2 * N; allelicFreq++) {
-			G2SUM = G2SUM + allelicFreqVsProbability.get(allelicFreq);
-		}
-		System.out.println("G2SUM: " + G2SUM);
 
-		System.out.println("allelicFreqVsProbability.get(k): " + allelicFreqVsProbability.get(k));
 		return allelicFreqVsProbability.get(k);
-
 	}
 
 }

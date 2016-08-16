@@ -10,12 +10,10 @@ public class WrightFisherModelTest {
 	DecimalFormat df;
 
 	@Test
-	public void WFMoverGTest() throws Exception {
-		df = new DecimalFormat("#.###");
-		
-		double x = WrightFisherModel.atLeastKCopiesOverGenerations(1, 4, 1 - WrightFisherModel.calculateProbability(4, 6), 2);
-		Assert.assertEquals(df.format(0.772), df.format(x));
-//		Assert.fail("TBD");
+	public void wfmOverGenerations() throws Exception {
+		df = new DecimalFormat("#.##");
+		double x = WrightFisherModel.probabilityOverGenerationsAndCopyNumbers(2, 5, 0.2, 1);
+		Assert.assertEquals(df.format(0.3), df.format(x));
 	}
 	
 	@Test(description="This value was pulled from a paper: http://evol.bio.lmu.de/_teaching/evogen/Evo9-Summary.pdf")
