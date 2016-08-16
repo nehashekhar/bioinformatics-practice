@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" total="7" passed="7">
+<testng-results skipped="0" failed="1" total="1" passed="0">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="102" started-at="2016-08-15T18:33:33Z" finished-at="2016-08-15T18:33:33Z">
+  <suite name="Default suite" duration-ms="60" started-at="2016-08-16T00:58:23Z" finished-at="2016-08-16T00:58:23Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="102" started-at="2016-08-15T18:33:33Z" finished-at="2016-08-15T18:33:33Z">
+    <test name="Default test" duration-ms="60" started-at="2016-08-16T00:58:23Z" finished-at="2016-08-16T00:58:23Z">
       <class name="bioinformatics_practice.rosalind.WrightFisherModelTest">
-        <test-method status="PASS" signature="calculateProbabilityTest()[pri:0, instance:bioinformatics_practice.rosalind.WrightFisherModelTest@735b478]" name="calculateProbabilityTest" duration-ms="18" started-at="2016-08-15T11:33:33Z" finished-at="2016-08-15T11:33:33Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- calculateProbabilityTest -->
-        <test-method status="PASS" signature="factorialNegativeNumber()[pri:0, instance:bioinformatics_practice.rosalind.WrightFisherModelTest@735b478]" name="factorialNegativeNumber" duration-ms="3" started-at="2016-08-15T11:33:33Z" finished-at="2016-08-15T11:33:33Z">
-          <exception class="java.lang.Exception">
+        <test-method status="FAIL" signature="sanityCheck()[pri:0, instance:bioinformatics_practice.rosalind.WrightFisherModelTest@737996a0]" name="sanityCheck" duration-ms="33" started-at="2016-08-15T17:58:23Z" finished-at="2016-08-15T17:58:23Z">
+          <exception class="junit.framework.AssertionFailedError">
             <message>
-              <![CDATA[Factorial for -1 is undefined.]]>
+              <![CDATA[expected:<1> but was:<0.3020636160000002>]]>
             </message>
             <full-stacktrace>
-              <![CDATA[java.lang.Exception: Factorial for -1 is undefined.
-	at bioinformatics_practice.rosalind.WrightFisherModel.factorial(WrightFisherModel.java:92)
-	at bioinformatics_practice.rosalind.WrightFisherModelTest.factorialNegativeNumber(WrightFisherModelTest.java:47)
+              <![CDATA[junit.framework.AssertionFailedError: expected:<1> but was:<0.3020636160000002>
+	at junit.framework.Assert.fail(Assert.java:47)
+	at junit.framework.Assert.failNotEquals(Assert.java:282)
+	at junit.framework.Assert.assertEquals(Assert.java:64)
+	at junit.framework.Assert.assertEquals(Assert.java:71)
+	at bioinformatics_practice.rosalind.WrightFisherModelTest.sanityCheck(WrightFisherModelTest.java:62)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -46,30 +45,10 @@
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:57)
 ]]>
             </full-stacktrace>
-          </exception> <!-- java.lang.Exception -->
+          </exception> <!-- junit.framework.AssertionFailedError -->
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- factorialNegativeNumber -->
-        <test-method status="PASS" signature="factorialOne()[pri:0, instance:bioinformatics_practice.rosalind.WrightFisherModelTest@735b478]" name="factorialOne" duration-ms="4" started-at="2016-08-15T11:33:33Z" finished-at="2016-08-15T11:33:33Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- factorialOne -->
-        <test-method status="PASS" signature="factorialTest()[pri:0, instance:bioinformatics_practice.rosalind.WrightFisherModelTest@735b478]" name="factorialTest" duration-ms="3" started-at="2016-08-15T11:33:33Z" finished-at="2016-08-15T11:33:33Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- factorialTest -->
-        <test-method status="PASS" signature="factorialZero()[pri:0, instance:bioinformatics_practice.rosalind.WrightFisherModelTest@735b478]" name="factorialZero" duration-ms="2" started-at="2016-08-15T11:33:33Z" finished-at="2016-08-15T11:33:33Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- factorialZero -->
-        <test-method status="PASS" signature="wfmOverGenerations()[pri:0, instance:bioinformatics_practice.rosalind.WrightFisherModelTest@735b478]" name="wfmOverGenerations" duration-ms="23" started-at="2016-08-15T11:33:33Z" finished-at="2016-08-15T11:33:33Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- wfmOverGenerations -->
-        <test-method status="PASS" signature="wfmPositiveTest()[pri:0, instance:bioinformatics_practice.rosalind.WrightFisherModelTest@735b478]" name="wfmPositiveTest" duration-ms="2" started-at="2016-08-15T11:33:33Z" description="This value was pulled from a paper: http://evol.bio.lmu.de/_teaching/evogen/Evo9-Summary.pdf" finished-at="2016-08-15T11:33:33Z">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- wfmPositiveTest -->
+        </test-method> <!-- sanityCheck -->
       </class> <!-- bioinformatics_practice.rosalind.WrightFisherModelTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
