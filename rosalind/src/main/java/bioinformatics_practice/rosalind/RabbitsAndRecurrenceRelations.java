@@ -14,7 +14,7 @@ public class RabbitsAndRecurrenceRelations {
 			int k = defineK();
 			int n = defineN();
 			
-			System.out.println("Rabbit pairs after " + n + " months if each pair produces " + k + " more pairs: " + fibonacciSequence(k, n));
+			System.out.println("Fibonacci number: " + fibonacciSequence(k, n));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

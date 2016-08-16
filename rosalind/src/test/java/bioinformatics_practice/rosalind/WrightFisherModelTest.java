@@ -9,14 +9,14 @@ import junit.framework.Assert;
 public class WrightFisherModelTest {
 	DecimalFormat df;
 
-	@Test(description="This test value was pulled from a paper: http://evol.bio.lmu.de/_teaching/evogen/Evo9-Summary.pdf")
+	@Test
 	public void wfmOverGenerations() throws Exception {
 		df = new DecimalFormat("#.##");
 		double x = WrightFisherModel.probabilityOverGenerationsAndCopyNumbers(2, 5, 0.2, 1);
 		Assert.assertEquals(df.format(0.3), df.format(x));
 	}
 	
-	@Test(description="This test value was pulled from a paper: http://evol.bio.lmu.de/_teaching/evogen/Evo9-Summary.pdf")
+	@Test(description="This value was pulled from a paper: http://evol.bio.lmu.de/_teaching/evogen/Evo9-Summary.pdf")
 	public void wfmPositiveTest() throws Exception {
 		df = new DecimalFormat("#.##");
 		

@@ -6,12 +6,10 @@ public class WrightFisherModel {
 
 	public static void main(String[] args) {
 		try {
-			int N = defineN();
-			int m = defineM(); // dominant allele
-			int g = defineG();
-			int k = defineK();
-			
-			//Check values
+			int N = 4;
+			int m = 6; // dominant allele
+			int g = 2;
+			int k = 1;
 			if (N < 0 | N > 7) {
 				throw new Exception("N must be a positive integer less than 7");
 			}
@@ -25,39 +23,19 @@ public class WrightFisherModel {
 				throw new Exception("k must be a positive integer less than 2*N");
 			}
 
-			//Calculate probability of recessive allele
-			double p = 1- calculateProbability(N, m);
+			// double p = calculateProbability(N, m); //dominant allele
+			double p = calculateProbability(N, (2 * N - m)); // recessive allele
 			double prob = 0;
 			for (int atLeastK = k; atLeastK <= 2 * N; atLeastK++) {
 				prob = prob + probabilityOverGenerationsAndCopyNumbers(atLeastK, N, p, g);
 			}
 			System.out.println("The probability of finding at least " + k + " copy(ies)"
-					+ " of this gene \nin a population of " + N + " individuals \nafter " + g
+					+ " of this gene \nin a population of " + N + " individuals \nover " + g
 					+ " generations \nwith an initial probability of " + p + " is: \n" + prob);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	/*
-	 * These methods below define the parameters used in calculation.
-	 * They can be changed to read from file, take user input, etc.
-	 */
-	public static int defineN() {
-		return 4;
-	}
-	
-	public static int defineM() {
-		return 6;
-	}
-	
-	public static int defineG() {
-		return 2;
-	}
-	
-	public static int defineK() {
-		return 1;
 	}
 
 	/*
@@ -89,17 +67,19 @@ public class WrightFisherModel {
 		}
 	}
 
+	
 	static double calculateProbability(int N, int m) {
 		double p = ((double) m) / ((double) (N * 2));
 		return p;
 	}
 
 	static double probabilityOverGenerationsAndCopyNumbers(int k, int N, double p, int g) throws Exception {
+		System.out.println("------");
 		int totalAlleles = 2 * N;
 		// For each generation, we have p of allellic frequency given p of allelic
 		// frequency of previous generation
 		// Loop over allelic frequencies by generation
-		// E.g. g0=p0, g1=p|p0, p2|p0, p3|p0, etc. until p2N
+		// E.g. g0=p0, g1=p|p0, p2|p0, p3|p0, etc. until pN
 		// g2=p|p0 from g1, p|p1 from g1, etc.
 		// g3=p|p0 from g2
 
@@ -111,9 +91,13 @@ public class WrightFisherModel {
 		double g1sum = 0;
 		for (int mAlleles = 0; mAlleles <= totalAlleles; mAlleles++) {
 			double pN = wrightFisherModel(mAlleles, N, p);
+			System.out.println(
+					"G1 probability of getting " + mAlleles + " copies given p(previous gen) = " + p + "| " + pN);
 			allelicFreqVsProbability.put(mAlleles, pN);
+			g1sum = g1sum + pN;
 		}
-		
+		System.out.println("G1SUM: " + g1sum);
+
 		// Second generation and onwards
 		for (int generation = 2; generation <= g; generation++) {
 			for (int k2 = 0; k2 <= totalAlleles; k2++) {
@@ -122,15 +106,20 @@ public class WrightFisherModel {
 					double pPreviousGen = allelicFreqVsProbability.get(mAlleles);
 					double pN = wrightFisherModel(k2, N, calculateProbability(N, mAlleles));
 
-					// Weighted sum (total law of probability): Probability of A  =
-					// Probability of A given B times probability of B
-					// Where A is finding k copies of allele in current generation
-					// And B is probability of finding the allele in previous generation
+					// Weighted sum (total law of probability): Probability of A
+					// given B times probability of B
 					pN2 = pN2 + (pN * pPreviousGen);
 				}
 				allelicFreqVsProbability.put(k2, pN2);
-				System.out.println("Generation " + generation + " | Cumulative probability of getting " + k2 + " copies: " + pN2);
-			}			
+				System.out.println("G2 Cumulative probability of getting " + k2 + " copies: " + pN2);
+			}
+			
+			// Check to ensure that probabilities sum to 1 in each generation
+			double GNSUM = 0;
+			for (int allelicFreq = 0; allelicFreq <= totalAlleles; allelicFreq++) {
+				GNSUM = GNSUM + allelicFreqVsProbability.get(allelicFreq);
+			}
+			System.out.println("GNSUM: " + GNSUM);
 		}
 
 		return allelicFreqVsProbability.get(k);
