@@ -22,7 +22,7 @@ public class WrightFisherModel {
 				throw new Exception("g must be a positive integer less than 6");
 			}
 			if (k < 0 | k > 2 * N) {
-				throw new Exception("k must be a positive integer less than 2*N");
+		I		throw new Exception("k must be a positive integer less than 2*N");
 			}
 
 			//Calculate probability of recessive allele
@@ -108,7 +108,6 @@ public class WrightFisherModel {
 		HashMap<Integer, Double> allelicFreqVsProbability = new HashMap<Integer, Double>();
 
 		// First generation; seed values
-		double g1sum = 0;
 		for (int mAlleles = 0; mAlleles <= totalAlleles; mAlleles++) {
 			double pN = wrightFisherModel(mAlleles, N, p);
 			allelicFreqVsProbability.put(mAlleles, pN);
