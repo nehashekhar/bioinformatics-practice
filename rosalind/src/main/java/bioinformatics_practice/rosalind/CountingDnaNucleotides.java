@@ -1,5 +1,9 @@
 package bioinformatics_practice.rosalind;
 
+import java.util.HashMap;
+
+import bioinformatics_practice.utility.NucleotideUtil;
+
 /**
  * http://rosalind.info/problems/rna/
  * @author nehashekhar
@@ -9,34 +13,13 @@ public class CountingDnaNucleotides {
 	
 	//TODO: Tests for these methods
 	public static void main(String[] args) {
-		int counterA = 0;
-		int counterC = 0;
-		int counterG = 0;
-		int counterT = 0;
-		
 		String sequence = "AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC";
 		
-		for (int i=0; i<=sequence.length()-1; i++) {
-			char j = sequence.charAt(i);
-			switch (j) {
-			case 'A': {
-				counterA++;
-				break;
-			}
-			case 'T': {
-				counterT++;
-				break;
-			}
-			case 'C': {
-				counterC++;
-				break;
-			}
-			case 'G': {
-				counterG++;
-				break;
-			}
-			}
-		}
+		HashMap<String, Integer> counter = NucleotideUtil.countNucleotides(sequence);
+		int counterA = counter.get("A");
+		int counterC = counter.get("C");
+		int counterG = counter.get("G");
+		int counterT = counter.get("T");
 		
 		System.out.println("A: " + counterA + " | C: " + counterC + " | G: " + counterG + " | T: " + counterT);
 	}

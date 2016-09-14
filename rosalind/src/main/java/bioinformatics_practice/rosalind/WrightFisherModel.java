@@ -22,7 +22,7 @@ public class WrightFisherModel {
 				throw new Exception("g must be a positive integer less than 6");
 			}
 			if (k < 0 | k > 2 * N) {
-		I		throw new Exception("k must be a positive integer less than 2*N");
+				throw new Exception("k must be a positive integer less than 2*N");
 			}
 
 			//Calculate probability of recessive allele
