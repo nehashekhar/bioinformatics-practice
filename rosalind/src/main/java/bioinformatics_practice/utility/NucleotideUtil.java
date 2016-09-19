@@ -39,4 +39,12 @@ public class NucleotideUtil {
 		count.put("T", counterT);
 		return count;
 	}
+	
+	public static String rnaToAminoAcidMapping(String xyz) throws Exception {
+		if (xyz.length() != 3) {
+			throw new Exception("This is not a nucleotide triplet");
+		}
+		
+		return Constants.aminoAcids.get(xyz);
+	}
 }
