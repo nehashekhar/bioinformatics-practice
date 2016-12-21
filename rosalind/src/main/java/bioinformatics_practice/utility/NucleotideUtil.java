@@ -3,7 +3,7 @@ package bioinformatics_practice.utility;
 import java.util.HashMap;
 
 public class NucleotideUtil {
-
+	// TODO: Tests for these methods
 	public static HashMap<String, Integer> countNucleotides(String sequence) {
 		int counterA = 0;
 		int counterC = 0;
@@ -31,7 +31,7 @@ public class NucleotideUtil {
 			}
 			}
 		}
-		
+
 		HashMap<String, Integer> count = new HashMap<String, Integer>();
 		count.put("A", counterA);
 		count.put("C", counterC);
@@ -39,12 +39,40 @@ public class NucleotideUtil {
 		count.put("T", counterT);
 		return count;
 	}
-	
+
+	public static char dnaToRnaMapping(char n) {
+		try {
+			return Constants.dnaToRna.get(n);
+		} catch (NullPointerException e) {
+			return Constants.dnaToRna.get('N');
+		}
+	}
+
 	public static String rnaToAminoAcidMapping(String xyz) throws Exception {
 		if (xyz.length() != 3) {
-			throw new Exception("This is not a nucleotide triplet");
+			throw new Exception("This is not a codon.");
 		}
-		
-		return Constants.aminoAcids.get(xyz);
+
+		try {
+			return Constants.rnaToAminoAcids.get(xyz);
+		} catch (NullPointerException e) {
+			return Constants.rnaToAminoAcids.get("UNKNOWN");
+		}
+	}
+
+	public static char returnDnaComplement(char n) {
+		try {
+			return Constants.dnaComplement.get(n);
+		} catch (NullPointerException e) {
+			return Constants.dnaComplement.get('N');
+		}
+	}
+
+	public static String returnDnaComplement(String seq) {
+		String complement = "";
+		for (int i = 0; i < seq.length(); i++) {
+			complement = complement + returnDnaComplement(seq.charAt(i));
+		}
+		return complement;
 	}
 }
