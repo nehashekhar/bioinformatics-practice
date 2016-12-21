@@ -4,7 +4,23 @@ import java.util.HashMap;
 
 public class Constants {
 
-	public static final HashMap<String, String> aminoAcids = new HashMap<String, String>() {
+	public static final HashMap<Character, Character> dnaToRna = new HashMap<Character, Character>() {{
+		put('A', 'A');
+		put('T', 'U');
+		put('C', 'C');
+		put('G', 'G');
+		put('N', 'N');
+	}};
+	
+	public static final HashMap<Character, Character> dnaComplement = new HashMap<Character, Character>() {{
+		put('A', 'T');
+		put('T', 'A');
+		put('G', 'C');
+		put('C', 'G');
+		put('N', 'N');
+	}};
+	
+	public static final HashMap<String, String> rnaToAminoAcids = new HashMap<String, String>() {
 		{
 			put("UUU", "F");
 			put("CUU", "L");
@@ -70,6 +86,7 @@ public class Constants {
 			put("CGG", "R");
 			put("AGG", "R");
 			put("GGG", "G");
+			put("UNKNOWN", "X");
 		}
 	};
 
